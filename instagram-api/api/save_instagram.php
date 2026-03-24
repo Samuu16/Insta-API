@@ -10,10 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+// DB CONNECTION
 $conn = new mysqli("34.14.179.112","chandu","Boomlet@123","instagram_db");
+
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo json_encode([
+        "status" => "error",
+        "message" => "DB connection failed: " . $conn->connect_error
+    ]);
+    exit();
 }
+
+// TEST CONNECTION
+echo json_encode(["status" => "connected"]);
 $data = json_decode(file_get_contents("php://input"), true);
 
 $username = $data["username"] ?? null;
