@@ -4,7 +4,11 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
+// ✅ HANDLE PREFLIGHT REQUEST PROPERLY
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 $conn = new mysqli("34.14.179.112","chandu","Boomlet@123","instagram_db");
 if ($conn->connect_error) {
