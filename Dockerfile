@@ -4,6 +4,6 @@ FROM php:8.2-apache
 COPY . /var/www/html/
 
 # Enable mod_rewrite (optional but useful)
-RUN a2enmod rewrite
+
 
 EXPOSE 80
