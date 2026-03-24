@@ -1,22 +1,27 @@
 <?php
 
-// GLOBAL CORS FIX
+// CORS
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-// HANDLE PREFLIGHT
+// Handle OPTIONS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Serve requested file
+// Get path
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+// Normalize path
 $file = __DIR__ . $path;
 
-if ($path !== "/" && file_exists($file)) {
-    return false;
+// ✅ If file exists → include it manually (IMPORTANT CHANGE)
+if ($path !== "/" && file_exists($file) && is_file($file)) {
+    require $file;
+    exit();
 }
 
+// fallback
 require __DIR__ . "/index.php";
