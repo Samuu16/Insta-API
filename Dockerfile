@@ -1,9 +1,10 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-# Copy all files to Apache directory
-COPY . /var/www/html/
+# Set working directory
+WORKDIR /app
 
-# Enable mod_rewrite (optional but useful)
+# Copy files
+COPY . .
 
-
-EXPOSE 80
+# Start PHP built-in server
+CMD php -S 0.0.0.0:10000
